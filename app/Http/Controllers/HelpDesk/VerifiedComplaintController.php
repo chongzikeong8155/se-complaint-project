@@ -303,6 +303,16 @@ class VerifiedComplaintController extends Controller
                 ]);
             }
             else {
+                if ($is_approve) {
+                    $verified_complaint->complaint_loggings()->create([
+                        'user_id' => Auth::id(),
+                        'assigned_to_department_id' => $verified_complaint->assigned_to_department_id,
+                        'remark' => $request->remark,
+                        'status_id' => 6,
+                        'complaint_action_id' => 9,
+                    ]);
+                    $verified_complaint->finalize_remark = $request->remark;
+                }
                 $verified_complaint->status_id = $is_approve ? 6 : 5;
                 $verified_complaint->complaint_action_id = $is_approve ? 9 : 1;
                 $verified_complaint->save();
