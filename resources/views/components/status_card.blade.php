@@ -13,17 +13,17 @@
         }
         else if($sts['name'] == "Keep in view") {
             $status_filter = 2;
-            $card_bg = "text-bg-primary";
+            $card_bg = "text-bg-info";
             $sts_desc = "haven't been accepted by the executive.";
         }
         else if($sts['name'] == "Active") {
             $status_filter = 3;
-            $card_bg = "text-bg-info";
+            $card_bg = "text-bg-primary";
             $sts_desc = "have been processed by the executive.";
         }
         else if($sts['name'] == "Done") {
             $status_filter = 4;
-            $card_bg = "text-bg-secondary";
+            $card_bg = "text-bg-success";
             $sts_desc = "complaints have been completed by the executive.";
         }
         else if ($sts['name'] == "Reprocessing") {
@@ -33,16 +33,16 @@
         }
         else if($sts['name'] == "Closed") {
             $status_filter = 6;
-            $card_bg = "text-bg-success";
+            $card_bg = "text-bg-dark";
             $sts_desc = "have been closed by the helpdesk.";
         }
     ?>
 
-    <div class="card ">
-        <div class="card-body <?php echo $card_bg ?>">
-        <h4 class="card-title ">{{$sts['name']}}</h4>
-        <p class="card-text">There are {{$sts['number']}} complaints <?php echo " ".$sts_desc ?></p>
-        <a href="{{ route($route, ['status_filter' => $status_filter]) }}" class="btn text-bg-dark ">More Detail</a>
+    <div class="card">
+        <div class="card-body {{ $card_bg }} rounded">
+            <h4 class="card-title ">{{$sts['name']}}</h4>
+            <p class="card-text">There are {{$sts['number']}} complaints <?php echo " ".$sts_desc ?></p>
+            <a href="{{ route($route, ['status_filter' => $status_filter]) }}" class="btn btn-light">More Detail</a>
         </div>
     </div>
 </div>
