@@ -68,36 +68,37 @@
             </div>
 
             <div class="text-center">
-                <h4>Name: {{ Auth::user()->first_name.' '.Auth::user()->last_name }}</h4>
-
-                @if (Auth::user()->HasRole())
-                    <div class="list-group">
+                <h4 class="mb-4">Name: {{ Auth::user()->first_name.' '.Auth::user()->last_name }}</h4>
+            </div>
+            @if (Auth::user()->HasRole())
+                <div class="row">
+                    <div class="col-12 navigate">
                         @if (Auth::user()->IsHelpDesk())
-                            <a data-bs-toggle="collapse" href="#collapseHelpdesk" role="button" aria-expanded="false" aria-controls="collapseHelpdesk" class="list-group-item list-group-item-action h5 @if(Request::is('help-desk/*')) active @endif">Help Desk</a>
-                            <div id="collapseHelpdesk" class="collapse">
-                                <a href="{{ route('helpdesk.dashboard') }}">Dashboard</a>
-                                <a href="{{ route('helpdesk.complaints.index') }}">All Complaints</a>
-                                <a href="{{ route('helpdesk.verified_complaints.index') }}">Ongoing Complaints</a>
+                            <a data-bs-toggle="collapse" href="#collapseHelpdesk" role="button" aria-expanded="{{ (Request::is('help-desk/*')) ? 'true': 'false' }}" aria-controls="collapseHelpdesk" class="h5 p-2 ps-3 mb-3 rounded nav {{ (Request::is('help-desk/*')) ? 'active': 'collapsed' }}">Help Desk</a>
+                            <div id="collapseHelpdesk" class="mb-3 px-2 ps-5 collapse @if(Request::is('help-desk/*')) show @endif">
+                                <a href="{{ route('helpdesk.dashboard') }}" class="d-block p-2 rounded nav-child @if(Request::is('help-desk/dashboard')) active @endif">Dashboard</a>
+                                <a href="{{ route('helpdesk.complaints.index') }}" class="d-block p-2 rounded nav-child @if(Request::is('help-desk/complaints') || Request::is('help-desk/complaints/*')) active @endif">All Complaints</a>
+                                <a href="{{ route('helpdesk.verified_complaints.index') }}" class="d-block p-2 rounded nav-child @if(Request::is('help-desk/verified-complaints') || Request::is('help-desk/verified-complaints/*')) active @endif">Ongoing Complaints</a>
                             </div>
                         @endif
+                    </div>
+                    <div class="col-12 navigate">
                         @if (Auth::user()->IsExecutive())
-                            <a href="{{ route('executive.dashboard') }}" class="list-group-item list-group-item-action h5 @if(Request::is('executive/*')) active @endif">Executive</a>
+                            <a href="{{ route('executive.dashboard') }}" class="h5 p-2 ps-3 mb-3 rounded nav @if(Request::is('executive/*')) active @endif">Executive</a>
                         @endif
+                    </div>
+                    <div class="col-12 navigate">
                         @if (Auth::user()->IsAdmin())
-                            <a data-bs-toggle="collapse" href="#collapseAdmin" role="button" aria-expanded="false" aria-controls="collapseAdmin" class="list-group-item list-group-item-action h5 @if(Request::is('administrator/*')) active @endif">Administrator</a>
+                            <a data-bs-toggle="collapse" href="#collapseAdmin" role="button" aria-expanded="{{ (Request::is('administrator/*')) ? 'true': 'false' }}" aria-controls="collapseAdmin" class="h5 p-2 ps-3 mb-3 rounded nav {{ (Request::is('administrator/*')) ? 'active': 'collapsed' }}">Administrator</a>
+                            <div id="collapseAdmin" class="mb-3 px-2 ps-5 collapse @if(Request::is('administrator/*')) show @endif">
+                                <a href="{{ route('users.index') }}" class="d-block p-2 rounded nav-child @if(Request::is('administrator/users') || Request::is('administrator/users/*')) active @endif">User Profile List</a>
+                                <a href="{{ route('departments.index') }}" class="d-block p-2 rounded nav-child @if(Request::is('administrator/departments') || Request::is('administrator/departments/*')) active @endif">Department List</a>
+                            </div>
                         @endif
                     </div>
-                @endif
-            </div>
-
-            @if (Auth::user()->HasRole())
-                @if (Auth::user()->IsAdmin())
-                    <div id="collapseAdmin" class="collapse">
-                        <a href="{{ route('users.index') }}">User Profile List</a>
-                        <a href="{{ route('departments.index') }}">Department List</a>
-                    </div>
-                @endif
+                </div>
             @endif
+
         </div>
     @endif
 
