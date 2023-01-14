@@ -33,7 +33,11 @@
     @if (Auth::check())
         <div class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container d-flex justify-content-between">
-                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+                <div class="d-flex align-items-center">
+                    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+                    <a href="{{ route('home') }}" class="text-decoration-none ms-3"><h2 class="mb-0 text-dark">E-Complaint</h2></a>
+                </div>
+
                 <div>
                     <h4 class="m-auto">{{ Auth::user()->first_name.' '.Auth::user()->last_name }}</h4>
                     <div class="d-flex justify-content-between">
