@@ -22,19 +22,19 @@ class Status extends Model
             $color = "warning";
         }
         else if ($this->name == "KIV") {
-            $color = "primary";
-        }
-        else if ($this->name == "Active") {
             $color = "info";
         }
+        else if ($this->name == "Active") {
+            $color = "primary";
+        }
         else if ($this->name == "Done") {
-            $color = "secondary";
+            $color = "success";
         }
         else if ($this->name == "Reprocessing") {
             $color = "danger";
         }
         else if ($this->name == "Closed") {
-            $color = "success";
+            $color = "secondary";
         }
         return $color;
     }
