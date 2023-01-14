@@ -53,8 +53,9 @@ class HomeController extends Controller
             ["name" => "Reprocessing", "number" => $reprocessing_number],
             ["name" => "Closed", "number" => $closed_number],
         ];
-
+        $full_total = $complaints->count();
         return view('student.student_dashboard')
-            ->with('status', $status);
+            ->with('status', $status)
+            ->with('total', $full_total);
     }
 }
