@@ -27,6 +27,7 @@ class VerifiedComplaintController extends Controller
         $vc_done_number = 0;
         $vc_reprocessing_number = 0;
         $vc_closed_number = 0;
+        $total = 0;
         if (Auth::user()->department_id != null) {
             $verified_complaints = VerifiedComplaint::where('assigned_to_department_id', Auth::user()->department_id)->get();
             $vc_kiv_number = $verified_complaints->where('status_id', 2)
@@ -39,6 +40,7 @@ class VerifiedComplaintController extends Controller
                                     ->count();
             $vc_closed_number = $verified_complaints->where('status_id', 6)
                                     ->count();
+            $total = $verified_complaints->count();
         }
         $verified_complaint_status = [
             ["name" => "Keep in view", "number" => $vc_kiv_number],
@@ -49,7 +51,8 @@ class VerifiedComplaintController extends Controller
         ];
 
         return view('executive.executive_dashboard')
-            ->with('status_verified_complaint', $verified_complaint_status);
+            ->with('status_verified_complaint', $verified_complaint_status)
+            ->with('total', $total);
     }
 
     public function index(Request $request)

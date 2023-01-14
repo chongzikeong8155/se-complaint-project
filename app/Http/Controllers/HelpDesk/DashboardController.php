@@ -30,7 +30,7 @@ class DashboardController extends Controller
         $closed_number = $complaints->where('status_id', 6)
                                 ->whereNotNull('verified_complaint_id')
                                 ->count();
-
+        $total_complaints = $complaints->count();
         $status = [
             ["name" => "Pending", "number" => $pending_number],
             ["name" => "Keep in view", "number" => $kiv_number],
@@ -51,7 +51,8 @@ class DashboardController extends Controller
                                 ->count();
         $vc_closed_number = $verified_complaints->where('status_id', 6)
                                 ->count();
-
+        $total_ongoing_verified_complaints = $verified_complaints->whereNotIn('status_id', [6])->count();
+        $total_verified_complaints = $verified_complaints->count();
         $verified_complaint_status = [
             ["name" => "Keep in view", "number" => $vc_kiv_number],
             ["name" => "Active", "number" => $vc_active_number],
@@ -62,6 +63,9 @@ class DashboardController extends Controller
 
         return view('helpdesk.helpdesk_dashboard')
             ->with('status_complaint', $status)
-            ->with('status_verified_complaint', $verified_complaint_status);
+            ->with('status_verified_complaint', $verified_complaint_status)
+            ->with('total_complaints', $total_complaints)
+            ->with('total_verified_complaints', $total_verified_complaints)
+            ->with('total_ongoing_verified_complaints', $total_ongoing_verified_complaints);
     }
 }
